@@ -12,7 +12,7 @@ class DbTest extends TestCase
    public function test_admin_v1()
    {
       $count = DB::table('users')
-              ->where('username', '=', 'admin')
+              ->where('name', '=', 'admin')
               ->count();
       $this->assertEquals($count, 1);
    }
@@ -20,7 +20,7 @@ class DbTest extends TestCase
    public function test_admin_v2()
    {
        $this->assertDatabaseHas('users', [
-           'username' => 'admin',
+           'name' => 'admin',
        ]);
    }
 }

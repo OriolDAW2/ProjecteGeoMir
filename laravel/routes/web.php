@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MailController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,15 +16,17 @@ use App\Http\Controllers\MailController;
 */
 
 Route::get('/', function () {
-    Log::info('Loading welcome page');
     return view('welcome');
 });
 
-// ...
-Route::get('mail/test', [MailController::class, 'test']);
-// or
-// Route::get('mail/test', 'App\Http\Controllers\MailController@test');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('guest')->group(function () {
+    Route::get('mail/test', [MailController::class, 'test']);
+});
+
+require __DIR__.'/auth.php';
 
 
-
- 
