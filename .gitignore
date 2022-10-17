@@ -1,0 +1,4 @@
+composer
+composer.phar
+composer.lock
+mysql-client-key.pem
