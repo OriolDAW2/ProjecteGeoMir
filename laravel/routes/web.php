@@ -23,10 +23,6 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('guest')->group(function () {
-    Route::get('mail/test', [MailController::class, 'test']);
-});
-
 require __DIR__.'/auth.php';
 
 
