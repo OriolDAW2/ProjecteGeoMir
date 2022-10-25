@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MailController;
 use Illuminate\Http\Request;
+use App\Http\Controllers\FileController;
 
 
 /*
@@ -30,6 +31,8 @@ Route::get('/', function (Request $request) {
    $request->session()->flash('info', $message);
    return view('welcome');
 });
+
+Route::resource('files', FileController::class);
 
 Auth::routes();
 

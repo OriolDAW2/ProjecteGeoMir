@@ -2,6 +2,7 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
+
         </h2>
     </x-slot>
 
@@ -15,3 +16,16 @@
         </div>
     </div>
 </x-app-layout>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Dashboard</div>
+                    <div class="card-body">
+                        <a class="btn btn-primary" href="{{ route('files.index') }}" role="button">Files</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
