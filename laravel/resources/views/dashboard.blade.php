@@ -23,6 +23,7 @@
                 <div class="card-header">Dashboard</div>
                     <div class="card-body">
                         <a class="btn btn-primary" href="{{ route('files.index') }}" role="button">Files</a>
+                        <a class="btn btn-primary" href="{{ route('posts.index') }}" role="button">Posts</a>
                     </div>
                 </div>
             </div>
