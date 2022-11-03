@@ -34,11 +34,11 @@ Route::get('/', function (Request $request) {
    return view('welcome');
 });
 
-Route::resource('files', FileController::class);
+Route::resource('files', FileController::class)
+->middleware(['auth', 'role.any:1,3']);
 
-Route::resource('files', FileController::class)->middleware(['auth', 'role.any:1,3']);
-
-Route::resource('posts', PostsController::class);
+Route::resource('posts', PostsController::class)
+->middleware(['auth', 'role.any:1,2,3']);
 
 Auth::routes();
 
