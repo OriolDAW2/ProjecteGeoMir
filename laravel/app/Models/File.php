@@ -13,4 +13,9 @@ class File extends Model
         'filepath',
         'filesize'
     ];
+
+    public function post(){
+        return $this->hasOne(Place::class);
+    }
+
 }
