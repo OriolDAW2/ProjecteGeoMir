@@ -46,4 +46,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }	
+    public function places(){
+        return $this->hasMany(Place::class);
+    }
 }

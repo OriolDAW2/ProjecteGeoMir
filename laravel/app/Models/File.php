@@ -18,5 +18,8 @@ class File extends Model
     {
         return $this->hasOne(Post::class);
     }
+    public function places(){
+        return $this->hasOne(Place::class);
+    }
 
 }
