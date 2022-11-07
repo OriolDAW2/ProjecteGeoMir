@@ -40,7 +40,7 @@
                             </tr>
                         </thead>
                    </table>
-                <img class="img-fluid" src="{{ asset("storage/{$post->file->filepath}") }}" />
+                <img class="img-fluid" src="{{ asset("storage/{$post->file->filepath") }}" />
                 </div>
                 <div class="card-footer">
                 <form method="post" action="{{ route('posts.destroy', $post) }}" enctype="multipart/form-data">
