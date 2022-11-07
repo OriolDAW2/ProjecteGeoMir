@@ -25,7 +25,7 @@
                        <thead>
                            <tr>
                                <td scope="col">ID</td>
-                               <td scope="col">Title</td>
+                               <td scope="col">Message</td>
                                <td scope="col">Created</td>
                                <td scope="col">Updated</td>
                                <td></td>
@@ -36,7 +36,7 @@
                        <tbody>
                            @foreach ($posts as $post)
                            <tr>
-                               <td>{{ $post->author_id }}</td>
+                               <td>{{ $post->id }}</td>
                                <td>{{ $post->body}}</td>
                                <td>{{ $post->created_at }}</td>
                                <td>{{ $post->updated_at }}</td>

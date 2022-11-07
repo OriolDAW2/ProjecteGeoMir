@@ -33,17 +33,17 @@
                                 <td scope="col"><h3>{{ $post->body }}</td>
                             </tr>
                             <tr>
-                                <td scope="col"><h3>{{ $post->latitude }}</td>
+                                <td scope="col"><h6>{{ $post->latitude }}</td>
                             </tr>
                             <tr>
-                                <td scope="col"><h3>{{ $post->longitude }}</td>
+                                <td scope="col"><h6>{{ $post->longitude }}</td>
                             </tr>
                         </thead>
                    </table>
-                <img class="img-fluid" src="{{ asset("storage/{$post->filepath}") }}" />
+                <img class="img-fluid" src="{{ asset("storage/{$post->file->filepath}") }}" />
                 </div>
                 <div class="card-footer">
-                <form method="post" action="{{ route('posts.destroy', $post, $file) }}" enctype="multipart/form-data">
+                <form method="post" action="{{ route('posts.destroy', $post) }}" enctype="multipart/form-data">
                     @csrf
                     @method('DELETE')
                     <a class="btn btn-primary" href="{{ route('posts.index') }}" role="button">See all Posts</a>

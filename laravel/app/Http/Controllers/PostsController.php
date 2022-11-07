@@ -135,6 +135,8 @@ class PostsController extends Controller
             'longitude' => 'required',
         ]);
 
+        $file = File::find($post->file_id);
+
         // Obtenir dades del Post
         $upload = $request->file('upload');
         $fileName = $upload->getClientOriginalName();
@@ -157,7 +159,7 @@ class PostsController extends Controller
             $fullPath = \Storage::disk('public')->path($filePath);
             \Log::debug("File saved at {$fullPath}");
             // Desar dades a BD
-            $file->filePath = $filePath;
+            $file-> filePath = $filePath;
             $file->filesize = $fileSize;
             $file->save();
             $post->body = $postBody;
@@ -182,11 +184,15 @@ class PostsController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post, File $file)
+    public function destroy(Post $post)
     {
+        // Eliminar el Post i el File
+        $file = File::find($post->file_id);
+        \Storage::disk('public')->delete($post->id);
+        $post->delete();
         \Storage::disk('public')->delete($file->filepath);
         $file->delete();
-        $post->delete();
+        
         if (\Storage::disk('public')->exists($file->filepath)) {
             \Log::debug("Post Alredy Exist");
             return redirect()->route('posts.show', $post)
