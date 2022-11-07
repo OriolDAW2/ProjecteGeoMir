@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 // use App
-use App\Models\Request;
+use Illuminate\Http\Request;
 use App\Models\File;
-// use Illuminate\Http\Request;
+use App\Models\Place;
 use Illuminate\Http\UploadedFile;
 
 class PlacesController extends Controller
@@ -18,7 +18,7 @@ class PlacesController extends Controller
     public function index()
     {
         return view("places.index", [
-            "places" => Places::all()
+            "places" => Place::all()
         ]);
     }
 

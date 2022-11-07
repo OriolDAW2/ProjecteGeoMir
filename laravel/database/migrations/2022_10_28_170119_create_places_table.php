@@ -17,15 +17,13 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
-            $table->unsingedBigInteger('file_id')->autoincrement();
-
-            $table->unsingedBigInteger('author_id')->autoincrement();
-            $table->unsingedBigInteger('visibility_id')->autoincrement();
-            $table->unsingedBigInteger('category_id:')->autoincrement();
+            $table->unsignedBigInteger('file_id');
+            $table->unsignedBigInteger('author_id');
             $table->timestamps();
-
             $table->float("longitude");
             $table->float("latitude");
+            $table->foreign('file_id')->references('id')->on('files');
+            $table->foreign('author_id')->references('id')->on('users');
             
         });
     }

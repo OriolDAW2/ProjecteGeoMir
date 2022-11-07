@@ -41,7 +41,7 @@ Route::resource('files', FileController::class)
 Route::resource('posts', PostsController::class)
 ->middleware(['auth', 'role.any:1,2,3']);
 
-Route::resource('Places', PlacesController::class);
+Route::resource('places', PlacesController::class);
 
 
 Auth::routes();

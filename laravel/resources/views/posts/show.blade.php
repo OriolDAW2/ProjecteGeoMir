@@ -30,17 +30,17 @@
                    <table class="table">
                         <thead>
                             <tr>
-                                <td scope="col"><h3>{{ $post->body }}</td>
+                                <td scope="col"><h5>Message: {{ $post->body }}</td>
                             </tr>
                             <tr>
-                                <td scope="col"><h6>{{ $post->latitude }}</td>
+                                <td scope="col"><h5>Latitude: {{ $post->latitude }}</td>
                             </tr>
                             <tr>
-                                <td scope="col"><h6>{{ $post->longitude }}</td>
+                                <td scope="col"><h5>Longitude: {{ $post->longitude }}</td>
                             </tr>
                         </thead>
                    </table>
-                <img class="img-fluid" src="{{ asset("storage/{$post->file->filepath") }}" />
+                <img class="img-fluid" src="{{ asset("storage/{$post->file->filepath}") }}" />
                 </div>
                 <div class="card-footer">
                 <form method="post" action="{{ route('posts.destroy', $post) }}" enctype="multipart/form-data">

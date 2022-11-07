@@ -159,7 +159,7 @@ class PostsController extends Controller
             $fullPath = \Storage::disk('public')->path($filePath);
             \Log::debug("File saved at {$fullPath}");
             // Desar dades a BD
-            $file-> filePath = $filePath;
+            $file->filepath = $filePath;
             $file->filesize = $fileSize;
             $file->save();
             $post->body = $postBody;
