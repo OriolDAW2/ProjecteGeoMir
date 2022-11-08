@@ -42,9 +42,9 @@
                                <td>{{ $place->longitude }}</td>
                                <td>{{ $place->created_at }}</td>
                                <td>{{ $place->updated_at }}</td>
-                               <td><a class="btn ver" href="{{ route('places.show', $post) }}" role="button">👁️</a></td>
-                               <td><a class="btn edit" href="{{ route('places.edit', $post) }}" role="button">📝</a></td>
-                               <td><form method="post" action="{{ route('places.destroy', $post) }}" enctype="multipart/form-data">
+                               <td><a class="btn ver" href="{{ route('places.show', $place) }}" role="button">👁️</a></td>
+                               <td><a class="btn edit" href="{{ route('places.edit', $place) }}" role="button">📝</a></td>
+                               <td><form method="post" action="{{ route('places.destroy', $place) }}" enctype="multipart/form-data">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn delete">🗑️</button>
@@ -53,7 +53,7 @@
                            @endforeach
                        </tbody>
                    </table>
-                   <a class="btn btn-primary" href="{{ route('places.create') }}" role="button">Add new file</a>
+                   <a class="btn btn-primary" href="{{ route('places.create') }}" role="button">Add new Place</a>
                </div>
            </div>
        </div>

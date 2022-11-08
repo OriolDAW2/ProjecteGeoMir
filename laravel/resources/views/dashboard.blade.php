@@ -24,6 +24,7 @@
                     <div class="card-body">
                         <a class="btn btn-primary" href="{{ route('files.index') }}" role="button">Files</a>
                         <a class="btn btn-primary" href="{{ route('posts.index') }}" role="button">Posts</a>
+                        <a class="btn btn-primary" href="{{ route('places.index') }}" role="button">Places</a>
                     </div>
                 </div>
             </div>

@@ -12,13 +12,12 @@ class Place extends Model
     protected $fillable = [
         'filepath',
         'filesize',
-        'category_id',
-        'visibility_id',
         'name',
-        'upload',
         'description',
         'latitude',
         'longitude',
+        'file_id',
+        'author_id',
     ];
 
     public function file(){

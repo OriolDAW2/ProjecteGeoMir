@@ -36,13 +36,13 @@ Route::get('/', function (Request $request) {
 });
 
 Route::resource('files', FileController::class)
-->middleware(['auth', 'role.any:1,3']);
+->middleware(['auth', 'role.any:1,2,3']);
 
 Route::resource('posts', PostsController::class)
 ->middleware(['auth', 'role.any:1,2,3']);
 
-Route::resource('places', PlacesController::class);
-
+Route::resource('places', PlacesController::class)
+->middleware(['auth', 'role.any:1,2,3']);
 
 Auth::routes();
 

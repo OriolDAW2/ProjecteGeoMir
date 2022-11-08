@@ -40,10 +40,8 @@ class PlacesController extends Controller
      */
     public function store(Request $request)
     {
-        // FICHERO
+        // VALIDAR CAMPOS
         $validarDate = $request->validate([
-            "category_id" => "required",
-            "visibility_id" => "required",
             "name" => "required",
             "upload" => "required|mimes:jpeg,jpng,png,mp4|max:1024",
             "description" => "required",
@@ -51,9 +49,7 @@ class PlacesController extends Controller
             "longitude" => "required",
         ]);
 
-        //OBTENER DATOS FICHERO
-        $category_id = $request->get("category_id");
-        $visibility_id = $request->get("visibility_id");
+        //OBTENER DATOS POR POST
         $name = $request->get("name");
         $upload = $request->file("upload");
         $description = $request->get("description");
@@ -63,32 +59,30 @@ class PlacesController extends Controller
         $longitude = $request->get("longitude");
         // \Log::debug($fileName, $Size)
         
-        //SUBIR FICHERO
-        $uploadName = time(). '_' .$fileName;
+        // Pujar fitxer al disc dur
+        $uploadName = time() . '_' . $fileName;
         $filePath = $upload->storeAs(
-            "uploads",
-            "public",
-            $uploadName,
+            'uploads',      // Path
+            $uploadName ,   // Filename
+            'public'        // Disk
         );
         
-        if (\Storage::disk("public")->exists(filePath)) {
+        if (\Storage::disk("public")->exists($filePath)) {
             $fullPath = \Storage::disk('public')->path($filePath);
 
             // GUARDAR BASE DE DATOS
             $file = File::create([
                 "filepath" => $filePath,
-                "fileSize" => $fileSize,
+                "filesize" => $fileSize,
             ]);
 
             $place = Place::create([
-                "name" => $name,
-                "description" => $description,
-                "file_id" => $file_id,
-                "latitude" => $latitude,
-                "longitude" => $longitude,
-                "category_id" => $category_id,
-                "visibility_id" => $visibility_id,
-                "author_id" => $author_id,
+                'name' => $name,
+                'description' => $description,
+                'file_id' => $file->id,
+                'latitude' => $latitude,
+                'longitude' => $longitude,
+                'author_id' => auth()->user()->id,
             ]);
             \Log::debug("Base de Datos storage BIEN!!!");
             return redirect()->route("places.show", $place)->with('Hecho places!');
@@ -108,12 +102,11 @@ class PlacesController extends Controller
      */
     public function show(Place $place)
     {
-        //
-        $file=File::find($place->file_id);
         return view("places.show", [
             "place" => $place,
-            "file" => $file,
-        ]);
+            "file" => $place->file(),
+            "user" => $place->user()
+        ])->with('success', 'Place Exist');
     }
 
     /**
@@ -125,11 +118,9 @@ class PlacesController extends Controller
     public function edit(Place $place)
     {
         //
-        $file=File::find($place->file_id);
         return view("places.edit", [
-            "place" => $place,
-            "file" => $file,
-        ]);
+            "place" => $place
+        ]); 
     }
 
     /**
@@ -139,7 +130,7 @@ class PlacesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Place $place)
     {
         //
         $validateData = $request->validate([
@@ -157,11 +148,11 @@ class PlacesController extends Controller
 
             \Log::debug($fileName,$fileSize);
 
-            $uploadName = time() . "_" . $fileName;
+            $uploadName = time() . '_' . $fileName;
             $filePath = $upload->storeAs(
-                "uploads",
-                "public",
-                $uploadName,
+                'uploads',      // Path
+                $uploadName ,   // Filename
+                'public'        // Disk
             );
         }
         else{
@@ -182,13 +173,11 @@ class PlacesController extends Controller
             // GUARDAR BASE DA DATOS
             $file->filepath=$filePath;
             $file->filesize=$fileSize;
-            file->save();
+            $file->save();
             $place->name=$request->input("name");
             $place->description=$request->input("description");
             $place->latitude=$request->input("latitude");
-            $place->longitude=$request->input("longitude");
-            $place->category_id=$request->input("category_id");
-            $place->visibility_id=$request->input("visibility_id");
+            $place->longitude=$request->input("longitude");+
             $place->save();
 
             return redirect()->route("places.edit", $place)->with('Error places guardar');
@@ -206,17 +195,19 @@ class PlacesController extends Controller
     {
         //
         $file=File::find($place->file_id);
-        \Storage::disk("public")->delete($place-> id);
+        \Storage::disk("public")->delete($place->id);
         $place->delete();
-        \Storage::disk("public")->delete($file-> filepath);
+        \Storage::disk("public")->delete($file->filepath);
         $file->delete();
 
-        if (condition) {
-            return redirect()->route("places.show", $place)->with('Error, places Existe');
-        }
-        else{
-            \Log::debug("Place borrado");
-            return redirect()->route("places.index", $place)->with('Error, places Borrado');
+        if (\Storage::disk('public')->exists($file->filepath)) {
+            \Log::debug("Place Alredy Exist");
+            return redirect()->route('places.show', $place)
+            ->with('error', 'ERROR place alredy exist');
+        }else{
+            \Log::debug("Place Delete");
+            return redirect()->route("places.index")
+            ->with('success', 'Place Deleted');
         }
     }
 }
