@@ -97,7 +97,7 @@ class PlacesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Place  $place
      * @return \Illuminate\Http\Response
      */
     public function show(Place $place)
@@ -112,14 +112,14 @@ class PlacesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Place  $place
      * @return \Illuminate\Http\Response
      */
     public function edit(Place $place)
     {
         //
         return view("places.edit", [
-            "place" => $place
+            "place" => $place,
         ]); 
     }
 
