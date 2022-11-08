@@ -48,27 +48,21 @@
                                 <td scope="col">Longitude</td>
                                 <td>{{ $place->longitude }}</td>
                             </tr>
-                            <tr>
-                                <td scope="col">Created</td>
-                                <td>{{ $place->created_at }}</td>
-                            </tr>
-                            <tr>
-                                <td scope="col">Updated</td>
-                                <td>{{ $place->updated_at }}</td>
-                            </tr>
                         </thead>      
                    </table>
                    <img class="img-fluid" src="{{ asset("storage/{$place->file->filepath}") }}" />
                 </div>
-           </div>
-           <form method="post" action="{{ route('places.destroy', $place) }}" enctype="multipart/form-data">
-                @csrf
-                @method('DELETE')
-                <a class="btn btn-primary" href="{{ route('places.index') }}" role="button">See all Places</a>
-                <a class="btn btn-primary edit" href="{{ route('places.edit', $place) }}" role="button">Edit</a>
-                <button type="submit" class="btn btn-primary delete">Delete</button>
-                <p style="float: right">Created: {{ $place->created_at }}
-           </form>
+                <div class="card-footer">
+                <form method="post" action="{{ route('places.destroy', $place) }}" enctype="multipart/form-data">
+                    @csrf
+                    @method('DELETE')
+                    <a class="btn btn-primary" href="{{ route('places.index') }}" role="button">See all Places</a>
+                    <a class="btn btn-primary edit" href="{{ route('places.edit', $place) }}" role="button">Edit</a>
+                    <button type="submit" class="btn btn-primary delete">Delete</button>
+                    <p style="float: right">Created: {{ $place->created_at }}
+                </form>
+                </div>
+            </div>
         </div>
    </div>
 </div>

@@ -132,57 +132,57 @@ class PlacesController extends Controller
      */
     public function update(Request $request, Place $place)
     {
-        //
-        $validateData = $request->validate([
-            "upload" => "mimes:jpeg,jpng,png,mp4|max:1024",
+        // Validar Place
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
         ]);
 
-        $file=File::find($place->file_id);
+        $file = File::find($place->file_id);
 
-        $upload = $request->file("upload");
-        $controlNull = false;
-
-        if (! is_null($upload)) {
-            $fileName = $upload->getClientOriginalName();
-            $fileSize = $upload->getSize();
-
-            \Log::debug($fileName,$fileSize);
-
-            $uploadName = time() . '_' . $fileName;
-            $filePath = $upload->storeAs(
-                'uploads',      // Path
-                $uploadName ,   // Filename
-                'public'        // Disk
-            );
-        }
-        else{
-            $filePath = $file->filepath;
-            $fileSize = $file->filesize;
-            $controlNull = true;
-        }
-
-        if (\Storage::disk("public")->exists($filePath)) {
-            if ($controlNull == false) {
-                \Storage::disk("public")->delete($file->filepath);
-                \Log::debug("Todo bien");
-                $fullPath = \Storage::disk("public")->path($filepath);
-                \Log::debug("Archivo guardado ",$fullPath);
-
-            }
-
-            // GUARDAR BASE DA DATOS
-            $file->filepath=$filePath;
-            $file->filesize=$fileSize;
+        // Obtenir dades del Post
+        $upload = $request->file('upload');
+        $fileName = $upload->getClientOriginalName();
+        $fileSize = $upload->getSize();
+        $placeName = $request->get('name');
+        $placeDescription = $request->get('description');
+        $placeLatitude = $request->get('latitude');
+        $placeLongitude = $request->get('longitude'); 
+        \Log::debug("Storing file '{$fileName}' ($fileSize)...");
+ 
+        // Pujar fitxer al disc dur
+        $uploadName = time() . '_' . $fileName;
+        $filePath = $upload->storeAs(
+            'uploads',      // Path
+            $uploadName ,   // Filename
+            'public'        // Disk
+        );
+      
+        if (\Storage::disk('public')->exists($filePath)) {
+            \Log::debug("Local storage OK");
+            $fullPath = \Storage::disk('public')->path($filePath);
+            \Log::debug("File saved at {$fullPath}");
+            // Desar dades a BD
+            $file->filepath = $filePath;
+            $file->filesize = $fileSize;
             $file->save();
-            $place->name=$request->input("name");
-            $place->description=$request->input("description");
-            $place->latitude=$request->input("latitude");
-            $place->longitude=$request->input("longitude");+
+            $place->name = $placeName;
+            $place->description = $placeDescription;
+            $place->latitude = $placeLatitude;
+            $place->longitude = $placeLongitude;
             $place->save();
-
-            return redirect()->route("places.edit", $place)->with('Error places guardar');
+            \Log::debug("DB storage OK");
+            // Patró PRG amb missatge d'èxit
+            return redirect()->route('places.show', $place)
+            ->with('success', 'Place successfully updated');
+        } else {
+            \Log::debug("Local storage FAILS");
+            // Patró PRG amb missatge d'error
+            return redirect()->route("places.create")
+            ->with('error', 'ERROR uploading place');
         }
-
     }
 
     /**
