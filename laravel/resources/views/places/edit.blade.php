@@ -5,11 +5,11 @@
    <div class="row justify-content-center">
        <div class="col-md-8">
            <div class="card">
-               <div class="card-header">{{ __('Places') }} {{ ('$place->id') }}</div>
+               <div class="card-header">{{ __('Edit Place') }}</div>
                <div class="card-body">
                    <table class="table">
                         <thead>
-                            <form method="post" action="{{ route('places.update'), $place }}" enctype="multipart/form-data">
+                            <form method="post" action="{{ route('places.update', $place) }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group" style="margin-bottom: 10px;">
