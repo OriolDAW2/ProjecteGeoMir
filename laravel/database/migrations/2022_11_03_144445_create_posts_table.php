@@ -20,9 +20,12 @@ return new class extends Migration
             $table->float('latitude');
             $table->float('longitude');
             $table->unsignedBigInteger('author_id');
+            $table->unsignedBigInteger('visibility_id');
             $table->timestamps();
             $table->foreign('file_id')->references('id')->on('files');
             $table->foreign('author_id')->references('id')->on('users');
+
+            
 
 
         });
