@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\VisibilityRequest;
+use App\Http\Requests\PlaceRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class VisibilityCrudController
+ * Class PlaceCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class VisibilityCrudController extends CrudController
+class PlaceCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,9 +26,9 @@ class VisibilityCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Visibility::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/visibility');
-        CRUD::setEntityNameStrings('visibility', 'visibilities');
+        CRUD::setModel(\App\Models\Place::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/place');
+        CRUD::setEntityNameStrings('place', 'places');
         $this->crud->denyAccess(['create', 'update', 'delete']);
     }
 
@@ -40,7 +40,14 @@ class VisibilityCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        CRUD::column('filepath');
+        CRUD::column('filesize');
         CRUD::column('name');
+        CRUD::column('description');
+        CRUD::column('latitude');
+        CRUD::column('longitude');
+        CRUD::column('file_id');
+        CRUD::column('author_id');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -57,9 +64,16 @@ class VisibilityCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        // CRUD::setValidation(VisibilityRequest::class);
+        CRUD::setValidation(PlaceRequest::class);
 
-        
+        CRUD::field('filepath');
+        CRUD::field('filesize');
+        CRUD::field('name');
+        CRUD::field('description');
+        CRUD::field('latitude');
+        CRUD::field('longitude');
+        CRUD::field('file_id');
+        CRUD::field('author_id');
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
@@ -76,6 +90,6 @@ class VisibilityCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        // $this->setupCreateOperation();
+        $this->setupCreateOperation();
     }
 }
