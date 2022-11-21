@@ -11,6 +11,7 @@
                         <thead>
                             <form method="post" action="{{ route('files.store') }}" enctype="multipart/form-data">
                                 @csrf
+                                @vite('resources/js/files/create.js')
                                 <div class="form-group" style="margin-bottom: 10px;">
                                     <label for="upload">File:</label>
                                     <input type="file" class="form-control" name="upload"/>

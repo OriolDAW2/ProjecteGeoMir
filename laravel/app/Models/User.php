@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
-use \Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Traits\HasRoles;
 
 
 class User extends Authenticatable
@@ -24,11 +24,12 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    public $guard_name = 'web';
+
     protected $fillable = [
         'name',
         'email',
         'password',
-        'role_id',
     ];
 
     /**

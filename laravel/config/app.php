@@ -82,7 +82,20 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'ca',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Locale Available
+    |--------------------------------------------------------------------------
+    */
+
+    'available_locales' => [
+        'ca' => 'Català',
+        'es' => 'Castellano',
+        'en' => 'English',
+    ],
+    
 
     /*
     |--------------------------------------------------------------------------
@@ -211,5 +224,10 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
+
+    // 'providers' => [
+    //     // ...
+    //     Spatie\Permission\PermissionServiceProvider::class,
+    // ],
 
 ];

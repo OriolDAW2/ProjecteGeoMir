@@ -13,6 +13,7 @@ class File extends Model
     use HasFactory;
     use CrudTrait;
     use HasRoles;
+    
     protected $fillable = [
         'filepath',
         'filesize'
