@@ -27,4 +27,6 @@ class UserCrudController extends PM_UserCrudController
         parent::setupListOperation();
         $this->crud->removeColumn('permissions');
     }
+
+    
 }

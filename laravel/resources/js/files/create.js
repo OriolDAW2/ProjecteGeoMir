@@ -19,14 +19,21 @@ form.addEventListener("submit", function( event ) {
    if (validation.passes()) {
        // Allow submit form (do nothing)
        console.log("Validation OK")
-   } else {
+    } else {
        // Get error messages
-       let errors = validation.errors.all()
-       console.log(errors)
-       // Show error messages
-       for(let inputName in errors) {
-           // ...
-       }
+        let errors = validation.errors.all()
+        console.log(errors)
+        // Show error messages
+        for(let inputName in errors) {
+        var error = document.querySelector("#error");
+            if(currentLocale == 'ca'){
+                error.innerHTML = "El camp " + inputName + " es obligatori!";
+            }else if(currentLocale == 'es'){
+                error.innerHTML = "El campo " + inputName + " es obligatorio!";
+            }else if(currentLocale == 'en'){
+                error.innerHTML = "Field " + inputName + " is required!";
+            }
+        }
        // Avoid submit
        event.preventDefault()
        return false

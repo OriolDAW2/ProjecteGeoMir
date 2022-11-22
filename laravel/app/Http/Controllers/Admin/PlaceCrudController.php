@@ -42,14 +42,12 @@ class PlaceCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('filepath');
-        CRUD::column('filesize');
-        CRUD::column('name');
-        CRUD::column('description');
-        CRUD::column('latitude');
-        CRUD::column('longitude');
-        CRUD::column('file_id');
-        CRUD::column('author_id');
+        CRUD::column('name')->label(__('fields.name'));
+        CRUD::column('description')->label(__('fields.description'));
+        CRUD::column('latitude')->label(__('fields.latitude'));
+        CRUD::column('longitude')->label(__('fields.longitude'));
+        CRUD::column('file_id')->label(__('fields.file_id'));
+        CRUD::column('author_id')->label(__('fields.author_id'));
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -67,15 +65,12 @@ class PlaceCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(PlaceRequest::class);
-
-        CRUD::field('filepath');
-        CRUD::field('filesize');
-        CRUD::field('name');
-        CRUD::field('description');
-        CRUD::field('latitude');
-        CRUD::field('longitude');
-        CRUD::field('file_id');
-        CRUD::field('author_id');
+        CRUD::column('name')->label(__('fields.name'));
+        CRUD::column('description')->label(__('fields.description'));
+        CRUD::column('latitude')->label(__('fields.latitude'));
+        CRUD::column('longitude')->label(__('fields.longitude'));
+        CRUD::column('file_id')->label(__('fields.file_id'));
+        CRUD::column('author_id')->label(__('fields.author_id'));
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

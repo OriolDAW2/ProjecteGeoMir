@@ -42,7 +42,7 @@ class VisibilityCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('name');
+        CRUD::column('name')->label(__('fields.name'));
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -60,7 +60,7 @@ class VisibilityCrudController extends CrudController
     protected function setupCreateOperation()
     {
         // CRUD::setValidation(VisibilityRequest::class);
-
+        CRUD::column('name')->label(__('fields.name'));
         
 
         /**

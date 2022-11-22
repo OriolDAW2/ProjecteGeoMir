@@ -91,11 +91,11 @@ class FileController extends Controller
         if (\Storage::disk('public')->exists($file->filepath)) {
             \Log::debug("File Exist");
             return view("files.show", ["file" => $file])
-            ->with('success', 'File Exist');
+            ->with('success', __('File Exist'));
         }else{
             \Log::debug("File Not Exist");
             return view("files.index")
-            ->with('error', 'ERROR File Not Exist'); 
+            ->with('error', __('ERROR File Not Exist')); 
         }
     }        
 
@@ -151,12 +151,12 @@ class FileController extends Controller
             \Log::debug("DB storage OK");
             // Patró PRG amb missatge d'èxit
             return redirect()->route('files.show', $file)
-            ->with('success', 'File successfully updated');
+            ->with('success', __('File successfully updated'));
         } else {
             \Log::debug("Local storage FAILS");
             // Patró PRG amb missatge d'error
             return redirect()->route("files.edit")
-            ->with('error', 'ERROR uploading file');
+            ->with('error', __('ERROR uploading file'));
         }
     }
 
@@ -173,11 +173,11 @@ class FileController extends Controller
         if (\Storage::disk('public')->exists($file->filepath)) {
             \Log::debug("File Alredy Exist");
             return redirect()->route('files.show', $file)
-            ->with('error', 'ERROR file alredy exist');
+            ->with('error', __('ERROR file alredy exist'));
         }else{
             \Log::debug("File Delete");
             return redirect()->route("files.index")
-            ->with('success', 'File Deleted');
+            ->with('success', __('File Deleted'));
         }
     }
 }

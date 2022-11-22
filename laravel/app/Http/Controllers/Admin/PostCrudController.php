@@ -45,11 +45,11 @@ class PostCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('body');
-        CRUD::column('latitude');
-        CRUD::column('longitude');
-        CRUD::column('file_id');
-        CRUD::column('author_id');
+        CRUD::column('body')->label(__('fields.body'));
+        CRUD::column('latitude')->label(__('fields.latitude'));
+        CRUD::column('longitude')->label(__('fields.longitude'));
+        CRUD::field('file_id')->label(__('fields.file_id'));
+        CRUD::field('author_id')->label(__('fields.author_id'));
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -68,11 +68,11 @@ class PostCrudController extends CrudController
     {
         CRUD::setValidation(PostRequest::class);
 
-        CRUD::field('body');
-        CRUD::field('latitude');
-        CRUD::field('longitude');
-        CRUD::field('file_id');
-        CRUD::field('author_id');
+        CRUD::column('body')->label(__('fields.body'));
+        CRUD::column('latitude')->label(__('fields.latitude'));
+        CRUD::column('longitude')->label(__('fields.longitude'));
+        CRUD::field('file_id')->label(__('fields.file_id'));
+        CRUD::field('author_id')->label(__('fields.author_id'));
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

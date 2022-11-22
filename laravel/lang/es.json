@@ -1,5 +1,12 @@
 {
     "File successfully saved": "Archivo guardado correctamente",
-    "ERROR uploading file": "ERROR en la subida del archivo"
+    "ERROR uploading file": "ERROR en la subida del archivo",
+    "File successfully updated": "Archivo subido correctamente",
+
+    "File Exist": "El archivo existe",
+    "ERROR File Not Exist": "El archivo no existe",
+
+    "ERROR file alredy exist": "ERROR el archivo ya existe",
+    "File Deleted": "Archivo Eliminado"
  }
  
