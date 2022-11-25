@@ -12,14 +12,13 @@ class Place extends Model
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
 
     protected $fillable = [
-        'filepath',
-        'filesize',
         'name',
         'description',
         'latitude',
         'longitude',
         'file_id',
         'author_id',
+        'visibility_id',
     ];
 
     public function file(){

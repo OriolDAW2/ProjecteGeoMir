@@ -57,7 +57,9 @@ class PlacesController extends Controller
         $fileSize = $upload->GetSize();
         $latitude = $request->get("latitude");
         $longitude = $request->get("longitude");
-        // \Log::debug($fileName, $Size)
+        $visibility_id = $request->get("visibility_id");
+        // \Log::debug($fileName, $Size);
+        // \Log::debug("visibility_id", $visibility_id);
         
         // Pujar fitxer al disc dur
         $uploadName = time() . '_' . $fileName;
@@ -83,6 +85,7 @@ class PlacesController extends Controller
                 'latitude' => $latitude,
                 'longitude' => $longitude,
                 'author_id' => auth()->user()->id,
+                'visibility_id' => $visibility_id,
             ]);
             \Log::debug("Base de Datos storage BIEN!!!");
             return redirect()->route("places.show", $place)->with('Hecho places!');
@@ -106,7 +109,7 @@ class PlacesController extends Controller
             "place" => $place,
             "file" => $place->file(),
             "user" => $place->user()
-        ])->with('success', 'Place Exist');
+        ])->with('success', __('Place Exist'));
     }
 
     /**
@@ -150,6 +153,7 @@ class PlacesController extends Controller
         $placeDescription = $request->get('description');
         $placeLatitude = $request->get('latitude');
         $placeLongitude = $request->get('longitude'); 
+        $visibility_id = $request->get('visibility_id'); 
         \Log::debug("Storing file '{$fileName}' ($fileSize)...");
  
         // Pujar fitxer al disc dur
@@ -172,16 +176,17 @@ class PlacesController extends Controller
             $place->description = $placeDescription;
             $place->latitude = $placeLatitude;
             $place->longitude = $placeLongitude;
+            $place->visibility_id = $visibility_id;
             $place->save();
             \Log::debug("DB storage OK");
             // Patró PRG amb missatge d'èxit
             return redirect()->route('places.show', $place)
-            ->with('success', 'Place successfully updated');
+            ->with('success', __('Place successfully updated'));
         } else {
             \Log::debug("Local storage FAILS");
             // Patró PRG amb missatge d'error
             return redirect()->route("places.create")
-            ->with('error', 'ERROR uploading place');
+            ->with('error', __('ERROR uploading place'));
         }
     }
 
@@ -203,11 +208,12 @@ class PlacesController extends Controller
         if (\Storage::disk('public')->exists($file->filepath)) {
             \Log::debug("Place Alredy Exist");
             return redirect()->route('places.show', $place)
-            ->with('error', 'ERROR place alredy exist');
+            ->with('error', __('ERROR place alredy exist'));
         }else{
             \Log::debug("Place Delete");
             return redirect()->route("places.index")
-            ->with('success', 'Place Deleted');
+            ->with('success', __('Place Deleted'));
         }
     }
+    
 }

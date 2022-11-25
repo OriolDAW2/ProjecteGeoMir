@@ -7,6 +7,17 @@
     "ERROR File Not Exist": "El fitxer no existeix",
 
     "ERROR file alredy exist": "ERROR el fitxer ja existeix",
-    "File Deleted": "Fitxer Eliminat"
+    "File Deleted": "Fitxer Eliminat",
+    
+    
+    "Place Exist": "El Place ya existeix",
+
+    "Place successfully updated": "Place actualitzat correctament",
+
+    "ERROR uploading place": "ERROR en carregar de place",
+
+    "ERROR place alredy exist": "ERROR place ja existeix",
+
+    "Place Deleted": "Place Esborrat"
 }
  

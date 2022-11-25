@@ -27,7 +27,15 @@
 
                                     <label for="upload">File:</label>
                                     <input type="file" class="form-control" name="upload"/>
-
+                                    <div id="error"></div>
+                                    <div style="margin-top: 10px">
+                                        <label for="visibility_id">visibility:</label>
+                                        <select name="visibility_id" class="form-control">
+                                            <option value="1">Public</option>
+                                            <option value="2">Contacts</option>
+                                            <option value="3">Private</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Create</button>
                                 <button type="reset" class="btn btn-secondary" style="margin-left: 10px">Reset</button>

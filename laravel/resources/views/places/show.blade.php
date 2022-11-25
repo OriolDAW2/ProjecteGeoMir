@@ -19,6 +19,8 @@
         background-color: #E74C3C;
         border-color: #E74C3C;
     }
+
+
 </style>
 <div class="container">
    <div class="row justify-content-center">
@@ -59,7 +61,10 @@
                     <a class="btn btn-primary" href="{{ route('places.index') }}" role="button">See all Places</a>
                     <a class="btn btn-primary edit" href="{{ route('places.edit', $place) }}" role="button">Edit</a>
                     <button type="submit" class="btn btn-primary delete">Delete</button>
+                    <button type="submit" class="btn btn-primary delete">favorito</button>
+
                     <p style="float: right">Created: {{ $place->created_at }}
+
                 </form>
                 </div>
             </div>

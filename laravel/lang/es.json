@@ -7,6 +7,18 @@
     "ERROR File Not Exist": "El archivo no existe",
 
     "ERROR file alredy exist": "ERROR el archivo ya existe",
-    "File Deleted": "Archivo Eliminado"
+    "File Deleted": "Archivo Eliminado",
+
+    
+    
+    "Place Exist": "El Place ya existe",
+
+    "Place successfully updated": "Place actualizado correctamente",
+
+    "ERROR uploading place": "ERROR en de carga en place",
+
+    "ERROR place alredy exist": "ERROR place ya existe",
+
+    "Place Deleted": "Place Borrado"
  }
  
