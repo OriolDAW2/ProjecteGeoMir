@@ -12,6 +12,17 @@
     "Post Exist": "El post existe",
     "Post successfully updated": "El post se ha actualizado correctamente",
     "ERROR post alredy exist": "ERROR el post aun existe",
-    "Post Deleted": "Post eliminado"
+    "Post Deleted": "Post eliminado",
+    
+    
+    "Place Exist": "El Place ya existe",
+
+    "Place successfully updated": "Place actualizado correctamente",
+
+    "ERROR uploading place": "ERROR en de carga en place",
+
+    "ERROR place alredy exist": "ERROR place ya existe",
+
+    "Place Deleted": "Place Borrado"
  }
  

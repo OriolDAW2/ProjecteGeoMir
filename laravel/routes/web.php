@@ -52,6 +52,10 @@ Route::get('/language/{locale}', [App\Http\Controllers\LanguageController::class
 
 Route::post('/posts/{post}/like', [App\Http\Controllers\PostsController::class, 'like'])->name('posts.like');
 
+Route::post('/places/{place}/favorite', [App\Http\Controllers\PlacesController::class, 'favorite'])->name('places.favorite');
+
+Route::post('/places/{place}/unfavorite', [App\Http\Controllers\PlacesController::class, 'unfavorite'])->name('places.unfavorite');
+
 Route::post('/posts/{post}/unlike', [App\Http\Controllers\PostsController::class, 'unlike'])->name('posts.unlike');
 
 require __DIR__.'/auth.php';

@@ -12,6 +12,17 @@
     "Post Exist": "El post existeix",
     "Post successfully updated": "El post s'ha actualizat correctament",
     "ERROR post alredy exist": "ERROR el post encara existeix",
-    "Post Deleted": "Post eliminat"
+    "Post Deleted": "Post eliminat",
+    
+    
+    "Place Exist": "El Place ya existeix",
+
+    "Place successfully updated": "Place actualitzat correctament",
+
+    "ERROR uploading place": "ERROR en carregar de place",
+
+    "ERROR place alredy exist": "ERROR place ja existeix",
+
+    "Place Deleted": "Place Esborrat"
 }
  
