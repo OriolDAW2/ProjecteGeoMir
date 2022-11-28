@@ -54,7 +54,4 @@ Route::post('/posts/{post}/like', [App\Http\Controllers\PostsController::class, 
 
 Route::post('/posts/{post}/unlike', [App\Http\Controllers\PostsController::class, 'unlike'])->name('posts.unlike');
 
-
-
-
 require __DIR__.'/auth.php';

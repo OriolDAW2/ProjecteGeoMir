@@ -31,6 +31,17 @@
         background-color: #1E894D;
         border-color: #1E894D;
     }
+    .unlike{
+        background-color: red; 
+        margin-right: 5px; 
+        margin-left: 5px;
+        border-color: red;
+        margin-top: 10px;
+    }
+    .unlike:hover{
+        background-color: #E74C3C;
+        border-color: #E74C3C;
+    }
 </style>
 <div class="container">
    <div class="row justify-content-center">
@@ -70,7 +81,7 @@
                 @else
                 <form method="post" action="{{ route('posts.unlike', $post) }}" enctype="multipart/form-data">
                     @csrf
-                    <button type="submit" class="btn btn-primary like" role="button">Unlike</button>
+                    <button type="submit" class="btn btn-primary unlike" role="button">Unlike</button>
                     <p style="float: right">Created: {{ $post->created_at }}
                 </form>
                 @endif
