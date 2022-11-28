@@ -59,4 +59,9 @@ class User extends Authenticatable
     public function places(){
         return $this->hasMany(Place::class, 'author_id');
     }
+    public function favorites()
+    {
+        return $this->belongsToMany(Place::class, 'favorites');
+    }
+
 }

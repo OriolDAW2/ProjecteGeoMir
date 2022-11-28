@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\File;
 use App\Models\Place;
+use App\Models\Favorite;
 use Illuminate\Http\UploadedFile;
 
 class PlacesController extends Controller
@@ -215,5 +216,23 @@ class PlacesController extends Controller
             ->with('success', __('Place Deleted'));
         }
     }
+
+    public function favorite(Place $place)
+    {
+        $user = $place->user();
+        $favorites = Favorite::create([
+            'user_id' => auth()->user()->id,
+            'place_id' => $place->id
+        ]);
+        return redirect()->back();
+    }
+    public function unfavorite(Place $place)
+    {
+        Favorite::where('user_id', auth()->user()->id)->where('place_id', $place->id)->delete();
+        return redirect()->back();
+
+    }
+
+
     
 }

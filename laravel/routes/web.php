@@ -50,6 +50,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/language/{locale}', [App\Http\Controllers\LanguageController::class, 'language']);
 
+Route::post('/places/{place}/favorite', [App\Http\Controllers\PlacesController::class, 'favorite'])->name('places.favorite');
+
+Route::post('/places/{place}/unfavorite', [App\Http\Controllers\PlacesController::class, 'unfavorite'])->name('places.unfavorite');
 
 
 require __DIR__.'/auth.php';

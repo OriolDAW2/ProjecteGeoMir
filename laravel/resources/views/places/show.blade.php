@@ -61,11 +61,21 @@
                     <a class="btn btn-primary" href="{{ route('places.index') }}" role="button">See all Places</a>
                     <a class="btn btn-primary edit" href="{{ route('places.edit', $place) }}" role="button">Edit</a>
                     <button type="submit" class="btn btn-primary delete">Delete</button>
-                    <button type="submit" class="btn btn-primary delete">favorito</button>
-
-                    <p style="float: right">Created: {{ $place->created_at }}
-
                 </form>
+
+                @if($place->isFavorite())
+                <form method="post" action="{{ route('places.favorite', $place) }}" enctype="multipart/form-data">
+                    @csrf
+                    <button type="submit" class="btn btn-primary like" role="button">Favorite</button>
+                    <p style="float: right">Created: {{ $place->created_at }}
+                </form>
+                @else
+                <form method="post" action="{{ route('places.unfavorite', $place) }}" enctype="multipart/form-data">
+                    @csrf
+                    <button type="submit" class="btn btn-primary like" role="button">Unfavorite</button>
+                    <p style="float: right">Created: {{ $place->created_at }}
+                </form>
+                @endif
                 </div>
             </div>
         </div>
