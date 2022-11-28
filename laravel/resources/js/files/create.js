@@ -2,11 +2,12 @@
 import Validator from '../validator'
  
 // Submit form ONLY when validation is OK
-const form = document.getElementById("create")
+const form = document.getElementById("create");
+var error = document.querySelector("#error");
  
 form.addEventListener("submit", function( event ) {
    // Reset errors messages
-   // ...
+   error.innerHTML = "";
    // Create validation
    let data = {
        "upload": document.getElementsByName("upload")[0].value,
@@ -25,7 +26,6 @@ form.addEventListener("submit", function( event ) {
         console.log(errors)
         // Show error messages
         for(let inputName in errors) {
-        var error = document.querySelector("#error");
             if(currentLocale == 'ca'){
                 error.innerHTML = "El camp " + inputName + " es obligatori!";
             }else if(currentLocale == 'es'){
@@ -37,5 +37,5 @@ form.addEventListener("submit", function( event ) {
        // Avoid submit
        event.preventDefault()
        return false
-   }
+    }
 })

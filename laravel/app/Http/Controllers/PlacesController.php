@@ -85,10 +85,10 @@ class PlacesController extends Controller
                 'author_id' => auth()->user()->id,
             ]);
             \Log::debug("Base de Datos storage BIEN!!!");
-            return redirect()->route("places.show", $place)->with('Hecho places!');
+            return redirect()->route("places.show", $place)->with('success', 'Hecho places!');
         } else {
             \Log::debug("storage ha fallado");
-            return redirect()->route("places.create", $place)->with('Error places');
+            return redirect()->route("places.create", $place)->with('error', 'Error places');
 
         }
 

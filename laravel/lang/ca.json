@@ -2,11 +2,16 @@
     "File successfully saved": "Fitxer desat correctament",
     "ERROR uploading file": "ERROR al pujar el fitxer",
     "File successfully updated": "Fitxer pujat correctament",
-
     "File Exist": "El fitxer existeix",
     "ERROR File Not Exist": "El fitxer no existeix",
-
     "ERROR file alredy exist": "ERROR el fitxer ja existeix",
-    "File Deleted": "Fitxer Eliminat"
+    "File Deleted": "Fitxer Eliminat",
+
+    "Post successfully saved": "El post s'ha guardat correctament",
+    "ERROR uploading post": "ERROR al actualizar el post",
+    "Post Exist": "El post existeix",
+    "Post successfully updated": "El post s'ha actualizat correctament",
+    "ERROR post alredy exist": "ERROR el post encara existeix",
+    "Post Deleted": "Post eliminat"
 }
  

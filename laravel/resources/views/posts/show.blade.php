@@ -20,6 +20,17 @@
         background-color: #E74C3C;
         border-color: #E74C3C;
     }
+    .like{
+        background-color: green; 
+        margin-right: 5px; 
+        margin-left: 5px;
+        border-color: green;
+        margin-top: 10px;
+    }
+    .like:hover{
+        background-color: #1E894D;
+        border-color: #1E894D;
+    }
 </style>
 <div class="container">
    <div class="row justify-content-center">
@@ -49,8 +60,20 @@
                     <a class="btn btn-primary" href="{{ route('posts.index') }}" role="button">See all Posts</a>
                     <a class="btn btn-primary edit" href="{{ route('posts.edit', $post) }}" role="button">Edit</a>
                     <button type="submit" class="btn btn-primary delete">Delete</button>
+                </form>
+                @if($post->isLike())
+                <form method="post" action="{{ route('posts.like', $post) }}" enctype="multipart/form-data">
+                    @csrf
+                    <button type="submit" class="btn btn-primary like" role="button">Like</button>
                     <p style="float: right">Created: {{ $post->created_at }}
                 </form>
+                @else
+                <form method="post" action="{{ route('posts.unlike', $post) }}" enctype="multipart/form-data">
+                    @csrf
+                    <button type="submit" class="btn btn-primary like" role="button">Unlike</button>
+                    <p style="float: right">Created: {{ $post->created_at }}
+                </form>
+                @endif
                 </div>
            </div>
         </div>

@@ -50,6 +50,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/language/{locale}', [App\Http\Controllers\LanguageController::class, 'language']);
 
+Route::post('/posts/{post}/like', [App\Http\Controllers\PostsController::class, 'like'])->name('posts.like');
+
+Route::post('/posts/{post}/unlike', [App\Http\Controllers\PostsController::class, 'unlike'])->name('posts.unlike');
+
+
 
 
 require __DIR__.'/auth.php';

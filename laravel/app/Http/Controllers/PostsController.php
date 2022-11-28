@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\File;
+use App\Models\Likes;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 
@@ -53,7 +54,9 @@ class PostsController extends Controller
         $postBody = $request->get('body'); 
         $postLatitude = $request->get('latitude');
         $postLongitude = $request->get('longitude'); 
+        $visibility_id = $request->get('visibility_id');
         \Log::debug("Storing file '{$fileName}' ($fileSize)...");
+        \Log::debug("Visibility '{$visibility_id}')...");
  
         // Pujar fitxer al disc dur
         $uploadName = time() . '_' . $fileName;
@@ -78,16 +81,17 @@ class PostsController extends Controller
                 'longitude' => $postLongitude,
                 'file_id' => $file->id,
                 'author_id' => auth()->user()->id,
+                'visibility_id' => $visibility_id,
             ]);
             \Log::debug("DB storage OK");
             // Patró PRG amb missatge d'èxit
             return redirect()->route('posts.show', $post)
-            ->with('success', 'Post successfully saved');
+            ->with('success', __('Post successfully saved'));
         } else {
             \Log::debug("Local storage FAILS");
             // Patró PRG amb missatge d'error
             return redirect()->route("posts.create")
-            ->with('error', 'ERROR uploading post');
+            ->with('error', __('ERROR uploading post'));
         }
     }
 
@@ -144,7 +148,9 @@ class PostsController extends Controller
         $postBody = $request->get('body'); 
         $postLatitude = $request->get('latitude');
         $postLongitude = $request->get('longitude'); 
+        $visibility_id = $request->get('visibility_id');
         \Log::debug("Storing file '{$fileName}' ($fileSize)...");
+        \Log::debug("Visibility '{$visbility_id}...");
  
         // Pujar fitxer al disc dur
         $uploadName = time() . '_' . $fileName;
@@ -165,16 +171,17 @@ class PostsController extends Controller
             $post->body = $postBody;
             $post->latitude = $postLatitude;
             $post->longitude = $postLongitude;
+            $post->visibility_id = $visibility_id;
             $post->save();
             \Log::debug("DB storage OK");
             // Patró PRG amb missatge d'èxit
             return redirect()->route('posts.show', $post)
-            ->with('success', 'Post successfully updated');
+            ->with('success', __('Post successfully updated'));
         } else {
             \Log::debug("Local storage FAILS");
             // Patró PRG amb missatge d'error
             return redirect()->route("posts.create")
-            ->with('error', 'ERROR uploading post');
+            ->with('error', __('ERROR uploading post'));
         }
     }
 
@@ -196,11 +203,27 @@ class PostsController extends Controller
         if (\Storage::disk('public')->exists($file->filepath)) {
             \Log::debug("Post Alredy Exist");
             return redirect()->route('posts.show', $post)
-            ->with('error', 'ERROR post alredy exist');
+            ->with('error', __('ERROR post alredy exist'));
         }else{
             \Log::debug("Post Delete");
             return redirect()->route("posts.index")
-            ->with('success', 'Post Deleted');
+            ->with('success', __('Post Deleted'));
         }
+    }
+
+    public function like(Post $post)
+    {
+        $user = $post->user();
+        $likes = Likes::create([
+            'user_id' => auth()->user()->id,
+            'post_id' => $post->id
+        ]);
+        return redirect()->back();
+    }
+
+    public function unlike(Post $post)
+    {
+        Likes::where('user_id', auth()->user()->id)->where('post_id', $post->id)->delete();
+        return redirect()->back();
     }
 }
