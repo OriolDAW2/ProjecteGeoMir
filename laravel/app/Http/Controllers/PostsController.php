@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\File;
-use App\Models\Likes;
+use App\Models\Like;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 
@@ -118,9 +118,15 @@ class PostsController extends Controller
      */
     public function edit(Post $post)
     {
-        return view("posts.edit", [
-            "post" => $post
-        ]); 
+        if(auth()->user()->id == $post->author_id){
+            $file = $post->file();
+            return view("posts.edit", [
+                "post" => $post,
+                "file" => $file,
+            ]); 
+        }else{
+            return abort(403);
+        }  
     }
 
     /**
@@ -214,7 +220,7 @@ class PostsController extends Controller
     public function like(Post $post)
     {
         $user = $post->user();
-        $likes = Likes::create([
+        $likes = Like::create([
             'user_id' => auth()->user()->id,
             'post_id' => $post->id
         ]);
@@ -223,7 +229,7 @@ class PostsController extends Controller
 
     public function unlike(Post $post)
     {
-        Likes::where('user_id', auth()->user()->id)->where('post_id', $post->id)->delete();
+        Like::where('user_id', auth()->user()->id)->where('post_id', $post->id)->delete();
         return redirect()->back();
     }
 }

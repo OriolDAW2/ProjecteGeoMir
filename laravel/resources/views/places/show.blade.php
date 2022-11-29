@@ -4,7 +4,8 @@
 <style>
     .edit{
         background-color: orange; 
-        margin: 10px; 
+        margin-right: 5px; 
+        margin-left: 5px;
         border-color: orange;
     }
     .edit:hover{
@@ -19,14 +20,46 @@
         background-color: #E74C3C;
         border-color: #E74C3C;
     }
-
-
+    .fav{
+        background-color: green; 
+        margin-left: 5px;
+        border-color: green;
+        float: right;
+        margin-top: -25px;
+    }
+    .fav:hover{
+        background-color: #1E894D;
+        border-color: #1E894D;
+    }
+    .unfav{
+        background-color: red; 
+        margin-left: 5px;
+        border-color: red;
+        float: right;
+        margin-top: -25px;
+    }
+    .unfav:hover{
+        background-color: #E74C3C;
+        border-color: #E74C3C;
+    }
 </style>
 <div class="container">
-   <div class="row justify-content-center">
-       <div class="col-md-8">
-           <div class="card">
-               <div class="card-header">{{ __('Place') }} {{ $place->id }}</div>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Place') }} {{ $place->id }}
+                @if($place->isFavorite())
+                <form method="post" action="{{ route('places.favorite', $place) }}" enctype="multipart/form-data">
+                    @csrf
+                    <button type="submit" class="btn btn-primary fav" role="button">Favorite</button>
+                </form>
+                @else
+                <form method="post" action="{{ route('places.unfavorite', $place) }}" enctype="multipart/form-data">
+                    @csrf
+                    <button type="submit" class="btn btn-primary unfav" role="button">Unfavorite</button>
+                </form>
+                @endif
+               </div>
                <div class="card-body">
                    <table class="table">
                        <thead>
@@ -51,8 +84,8 @@
                                 <td>{{ $place->longitude }}</td>
                             </tr>
                         </thead>      
-                   </table>
-                   <img class="img-fluid" src="{{ asset("storage/{$place->file->filepath}") }}" />
+                    </table>
+                    <img class="img-fluid" src="{{ asset("storage/{$place->file->filepath}") }}" />
                 </div>
                 <div class="card-footer">
                 <form method="post" action="{{ route('places.destroy', $place) }}" enctype="multipart/form-data">
@@ -61,24 +94,13 @@
                     <a class="btn btn-primary" href="{{ route('places.index') }}" role="button">See all Places</a>
                     <a class="btn btn-primary edit" href="{{ route('places.edit', $place) }}" role="button">Edit</a>
                     <button type="submit" class="btn btn-primary delete">Delete</button>
+                    <p style="float: right">
+                    Author: {{ $place->user->name}}<br>
+                    Created: {{ $place->created_at }}
                 </form>
-
-                @if($place->isFavorite())
-                <form method="post" action="{{ route('places.favorite', $place) }}" enctype="multipart/form-data">
-                    @csrf
-                    <button type="submit" class="btn btn-primary like" role="button">Favorite</button>
-                    <p style="float: right">Created: {{ $place->created_at }}
-                </form>
-                @else
-                <form method="post" action="{{ route('places.unfavorite', $place) }}" enctype="multipart/form-data">
-                    @csrf
-                    <button type="submit" class="btn btn-primary like" role="button">Unfavorite</button>
-                    <p style="float: right">Created: {{ $place->created_at }}
-                </form>
-                @endif
                 </div>
             </div>
         </div>
-   </div>
+    </div>
 </div>
 @endsection

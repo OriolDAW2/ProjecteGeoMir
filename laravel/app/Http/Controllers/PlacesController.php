@@ -121,10 +121,15 @@ class PlacesController extends Controller
      */
     public function edit(Place $place)
     {
-        //
-        return view("places.edit", [
-            "place" => $place,
-        ]); 
+        if(auth()->user()->id == $place->author_id){
+            $file = $place->file();
+            return view("places.edit", [
+                "places" => $places,
+                "file" => $file,
+            ]); 
+        }else{
+            return abort(403);
+        }
     }
 
     /**

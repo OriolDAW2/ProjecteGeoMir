@@ -27,8 +27,11 @@
                                <td scope="col">ID</td>
                                <td scope="col">Name</td>
                                <td scope="col">Description</td>
+                               <td scope="col">Author</td>
                                <td scope="col">Created</td>
                                <td scope="col">Updated</td>
+                               <td></td>
+                               <td></td>
                                <td></td>
                            </tr>
                        </thead>
@@ -38,17 +41,18 @@
                                <td>{{ $place->id }}</td>
                                <td>{{ $place->name }}</td>
                                <td>{{ $place->description }}</td>
-                               <td>{{ $place->latitude }}</td>
-                               <td>{{ $place->longitude }}</td>
+                               <td>{{ $place->user->name}}</td>
                                <td>{{ $place->created_at }}</td>
                                <td>{{ $place->updated_at }}</td>
                                <td><a class="btn ver" href="{{ route('places.show', $place) }}" role="button">👁️</a></td>
                                <td><a class="btn edit" href="{{ route('places.edit', $place) }}" role="button">📝</a></td>
-                               <td><form method="post" action="{{ route('places.destroy', $place) }}" enctype="multipart/form-data">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn delete">🗑️</button>
-                                </form></td>
+                               <td>
+                                    <form method="post" action="{{ route('places.destroy', $place) }}" enctype="multipart/form-data">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn delete">🗑️</button>
+                                    </form>
+                                </td>
                            </tr>
                            @endforeach
                        </tbody>

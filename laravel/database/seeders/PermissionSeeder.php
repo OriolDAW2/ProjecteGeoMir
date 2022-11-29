@@ -63,9 +63,41 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'permissions.delete']);
 
         // Asignar Permisos
-        $adminRole->givePermissionTo(['files.*', 'posts.*', 'places.*']);
-        $editorRole->givePermissionTo(['files.list', 'files.update', 'files.read', 'posts.list', 'posts.update', 'posts.read', 'places.list', 'places.update', 'places.read', ]);
-        $authorRole->givePermissionTo(['files.list', 'files.create', 'files.read', 'files.delete', 'posts.list', 'posts.create', 'posts.read', 'posts.delete', 'places.list', 'places.create', 'places.read', 'places.delete']);
+        $adminRole->givePermissionTo
+        ([
+            'files.*', 
+            'posts.*', 
+            'places.*'
+        ]);
+
+        $editorRole->givePermissionTo
+        ([
+            'files.list', 
+            'files.update', 
+            'files.read', 
+            'posts.list', 
+            'posts.update', 
+            'posts.read', 
+            'places.list', 
+            'places.update', 
+            'places.read', 
+        ]);
+
+        $authorRole->givePermissionTo
+        ([
+            'files.list', 
+            'files.create', 
+            'files.read', 
+            'files.delete', 
+            'posts.list', 
+            'posts.create', 
+            'posts.read', 
+            'posts.delete', 
+            'places.list', 
+            'places.create', 
+            'places.read',
+            'places.delete'
+        ]);
 
         $name  = config('admin.name');
         $admin = User::where('name', $name)->first();

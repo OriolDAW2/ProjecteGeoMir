@@ -12,6 +12,8 @@ class Visibility extends Model
     use HasFactory;
     use CrudTrait;
 
+    public $timestamps = false;
+
     protected $fillable = [
         'id',
         'name',
