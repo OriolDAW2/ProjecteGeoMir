@@ -227,7 +227,7 @@ class PostsController extends Controller
         return redirect()->back();
     }
 
-    public function unlike(Post $post)
+    public function unmar(Post $post)
     {
         Like::where('user_id', auth()->user()->id)->where('post_id', $post->id)->delete();
         return redirect()->back();

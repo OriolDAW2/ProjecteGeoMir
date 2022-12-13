@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail;
  
-class MailController extends Controller{
+class MailController extends Controller
+{
    public function test(Request $request)
    {
        try {
