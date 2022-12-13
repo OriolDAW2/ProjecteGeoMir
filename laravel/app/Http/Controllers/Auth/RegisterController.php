@@ -77,7 +77,7 @@ class RegisterController extends Controller
 
         Auth::login($user);
 
-        $user->assingRole('author');
+        $user->assignRole('author');
         return $user;
 
     }

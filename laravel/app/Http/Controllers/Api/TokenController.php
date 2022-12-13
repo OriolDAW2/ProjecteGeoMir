@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 class TokenController extends Controller
 {
@@ -33,8 +34,8 @@ class TokenController extends Controller
         // Token response
         $token = $user->createToken("authToken")->plainTextToken;
 
-        // Assing Role
-        $user->assingRole('author');
+        // Assign Role
+        $user->assignRole('author');
 
         return response()->json([
             "success"   => true,
@@ -83,9 +84,14 @@ class TokenController extends Controller
         }
     }
 
-    public function logout(Request $request, User $user)
+    public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            "success" => true,
+            "message" => "Invalid login credentials"
+        ]);
 
     }
 
