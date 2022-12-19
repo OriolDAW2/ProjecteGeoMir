@@ -60,7 +60,7 @@ class PlaceTest extends TestCase
         $author_id = 1;
 
         // Upload fake place using API web service
-        $response = $this->placeJson("/api/places", [
+        $response = $this->postJson("/api/places", [
             "upload" => $upload,
             "name" => $placeName,
             "description" => $placeDescription,
@@ -108,7 +108,7 @@ class PlaceTest extends TestCase
         $author_id = 'Hola';
 
         // Upload fake place using API web service
-        $response = $this->placeJson("/api/places", [
+        $response = $this->postJson("/api/places", [
             "upload" => $upload,
             "name" => $placeName,
             "description" => $placeDescription,
