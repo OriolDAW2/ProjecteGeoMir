@@ -4,8 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\FileController;
 use App\Http\Controllers\Api\TokenController;
-
-
+use App\Http\Controllers\Api\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,4 +30,6 @@ Route::post('logout', [TokenController::class, 'logout'])
 Route::apiResource('files', FileController::class);
 
 Route::post('files/{file}', [FileController::class, 'update_workaround']);
+
+Route::apiResource('posts', PostController::class);
 

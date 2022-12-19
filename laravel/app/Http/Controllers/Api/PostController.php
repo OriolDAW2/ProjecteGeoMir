@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use App\Models\Post;
 use App\Models\File;
+use App\Models\User;
 
-class FileController extends Controller
+
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +18,10 @@ class FileController extends Controller
      */
     public function index()
     {
-        $files = File::all();
+        $posts = Post::all();
         return response()->json([
             'success' => true,
-            'data' => $files,
+            'data' => $posts,
         ], 200);
     }
 
@@ -40,6 +42,10 @@ class FileController extends Controller
         $upload = $request->file('upload');
         $fileName = $upload->getClientOriginalName();
         $fileSize = $upload->getSize();
+        $postBody = $request->get('body'); 
+        $postLatitude = $request->get('latitude');
+        $postLongitude = $request->get('longitude'); 
+        $visibility_id = $request->get('visibility_id');
         \Log::debug("Storing file '{$fileName}' ($fileSize)...");
  
         // Pujar fitxer al disc dur
@@ -54,16 +60,25 @@ class FileController extends Controller
             \Log::debug("Local storage OK");
             $fullPath = \Storage::disk('public')->path($filePath);
             \Log::debug("File saved at {$fullPath}");
+
             // Desar dades a BD
             $file = File::create([
-               'filepath' => $filePath,
-               'filesize' => $fileSize,
+                'filepath' => $filePath,
+                'filesize' => $fileSize,
+            ]);
+            $post = Post::create([
+                'body' => $postBody,
+                'latitude' => $postLatitude,
+                'longitude' => $postLongitude,
+                'file_id' => $file->id,
+                'author_id' => auth()->user()->id,
+                'visibility_id' => $visibility_id,
             ]);
             \Log::debug("DB storage OK");
             // Patró PRG amb missatge d'èxit
             return response()->json([
                 'success' => true,
-                'data'    => $file
+                'data'    => $post
             ], 201);
         } else {
             \Log::debug("Local storage FAILS");
@@ -82,17 +97,17 @@ class FileController extends Controller
      */
     public function show($id)
     {
-        $file = File::find($id);
-        if($file == null)
+        $post = Post::find($id);
+        if($post == null)
         {
             return response()->json([
                 'success'  => false,
-                'message' => 'Error file not found'
+                'message' => 'Error post not found'
             ], 404);
         } else {
             return response()->json([
                 'success' => true,
-                'data'    => $file
+                'data'    => $post
             ], 200);
         }
     }
@@ -106,10 +121,11 @@ class FileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $file = File::find($id);
+        $post = Post::find($id);
 
-        if($file)
+        if($post)
         {
+            $file = File::find($post->file_id);
             // Validar fitxer
             $validatedData = $request->validate([
                 'upload' => 'required|mimes:gif,jpeg,jpg,png|max:2048'
@@ -119,6 +135,10 @@ class FileController extends Controller
             $upload = $request->file('upload');
             $fileName = $upload->getClientOriginalName();
             $fileSize = $upload->getSize();
+            $postBody = $request->get('body'); 
+            $postLatitude = $request->get('latitude');
+            $postLongitude = $request->get('longitude'); 
+            $visibility_id = $request->get('visibility_id');
             \Log::debug("Storing file '{$fileName}' ($fileSize)...");
     
             // Pujar fitxer al disc dur
@@ -136,22 +156,28 @@ class FileController extends Controller
                 $file->filepath = $filePath;
                 $file->filesize = $fileSize;
                 $file->save();
+
+                $post->body = $postBody;
+                $post->latitude = $postLatitude;
+                $post->longitude = $postLongitude;
+                $post->visibility_id = $visibility_id;
+                $post->save();
                 \Log::debug("DB storage OK");
                 return response()->json([
                     'success' => true,
-                    'data'    => $file
-                ], 200);
+                    'data'    => $post
+                ], 201);
             } else {
                 \Log::debug("Local storage FAILS");
                 return response()->json([
                     'success'  => false,
-                    'message' => 'Error uploading file'
-                ], 421);
+                    'message' => 'Error uploading post'
+                ], 500);
             }
         } else {
             return response()->json([
                 'success'  => false,
-                'message' => 'Error file not found'
+                'message' => 'Error post not found'
             ], 404);
         }   
     }
@@ -164,35 +190,38 @@ class FileController extends Controller
      */
     public function destroy($id)
     {
-        $file = File::find($id);
-        if($file == null)
+        $post = Post::find($id);
+        
+        if($post == null)
         {
             return response()->json([
                 'success'  => false,
-                'message' => 'Error file not found'
-            ], 404);
-        }
-        \Storage::disk('public')->delete($file->filepath);
-        $file->delete();
-
-        if (\Storage::disk('public')->exists($file->filepath)) {
-            \Log::debug("File Alredy Exist");
-            return response()->json([
-                'success'  => false,
-                'message' => 'Error file exist'
+                'message' => 'Error post not found'
             ], 404);
         }else{
-            \Log::debug("File Delete");
+            $file = File::find($post->file_id);
+            \Storage::disk('public')->delete($post->id);
+            $post->delete();
             return response()->json([
                 'success' => true,
-                'data'    => $file
+                'data'    => $post
             ], 200);
-        }        
-    }
+        }
 
-    public function update_workaround(Request $request, $id)
-    {
-        return $this->update($request, $id);
+        if ($file == null) {
+            \Log::debug(" Alredy Exist");
+            return response()->json([
+                'success'  => false,
+                'message' => 'Error post exist'
+            ], 404);
+        }else{
+            \Storage::disk('public')->delete($file->filepath);
+            $file->delete();
+            \Log::debug("Post Delete");
+            return response()->json([
+                'success' => true,
+                'data'    => $post
+            ], 200);
+        }  
     }
-
 }
