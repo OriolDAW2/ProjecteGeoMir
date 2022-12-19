@@ -33,3 +33,4 @@ Route::post('files/{file}', [FileController::class, 'update_workaround']);
 
 Route::apiResource('posts', PostController::class);
 
+Route::apiResource('places', PlaceController::class);
