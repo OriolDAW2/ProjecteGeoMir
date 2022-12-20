@@ -200,7 +200,6 @@ class PostController extends Controller
             ], 404);
         }else{
             $file = File::find($post->file_id);
-            \Storage::disk('public')->delete($post->id);
             $post->delete();
             return response()->json([
                 'success' => true,
@@ -223,5 +222,45 @@ class PostController extends Controller
                 'data'    => $post
             ], 200);
         }  
+    }
+
+    public function like(Request $request, $id)
+    {
+        $post = Post::find($id);
+        if($post)
+        {
+            $likes = Like::create([
+                'user_id' => auth()->user()->id,
+                'post_id' => $post->id
+            ]);
+            return response()->json([
+                'success' => true,
+                'data'    => $post
+            ], 200);
+        }else {
+            return response()->json([
+                'success'  => false,
+                'message' => 'Error Like'
+            ], 500);
+        }
+        
+    }
+
+    public function unlike(Request $request, $id)
+    {
+        $post = Post::find($id);
+
+        if($post){
+            Like::where('user_id', auth()->user()->id)->where('post_id', $post->id)->delete();
+            return response()->json([
+                'success' => true,
+                'data'    => $post
+            ], 200);
+        }else {
+            return response()->json([
+                'success'  => false,
+                'message' => 'Error unLike'
+            ], 500);
+        }
     }
 }

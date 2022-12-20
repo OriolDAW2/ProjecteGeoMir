@@ -210,7 +210,7 @@ class PostTest extends TestCase
         ]);
 
         // Upload fake file using API web service
-        $response = $this->putJson("/api/files/{$post->id}", [
+        $response = $this->putJson("/api/posts/{$post->id}", [
             "upload" => $upload,
         ]);
         // Check ERROR response
@@ -241,6 +241,42 @@ class PostTest extends TestCase
         $response = $this->deleteJson("/api/posts/{$id}");
         $this->_test_notfound($response);
 
+    }
+    /**
+        * @depends test_post_create
+        */
+    public function test_post_like(object $post)
+    {
+        // Delete one file using API web service
+        $response = $this->postJson("/api/posts/{$post->id}/likes");
+        // Check OK response
+        $this->_test_ok($response);
+    }
+    /**
+        * @depends test_post_create
+        */
+    public function test_post_like_error(object $post)
+    {
+        $response = $this->postJson("/api/posts/{$post->id}", []);
+        $this->_test_error($response);
+    }
+    /**
+        * @depends test_post_create
+        */
+    public function test_post_unlike(object $post)
+    {
+        // Delete one file using API web service
+        $response = $this->postJson("/api/posts/{$post->id}/unlikes");
+        // Check OK response
+        $this->_test_ok($response);
+    }
+    /**
+        * @depends test_post_create
+        */
+    public function test_post_unlike_error(object $post)
+    {
+        $response = $this->postJson("/api/posts/{$post->id}", []);
+        $this->_test_error($response);
     }
     
     protected function _test_ok($response, $status = 200)

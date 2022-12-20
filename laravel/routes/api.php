@@ -35,3 +35,6 @@ Route::post('files/{file}', [FileController::class, 'update_workaround']);
 Route::apiResource('posts', PostController::class);
 
 Route::apiResource('places', PlaceController::class);
+
+Route::post('/posts/{post}/like', [PostController::class, 'like']);
+Route::post('/posts/{post}/unlike', [PostController::class, 'unlike']);
