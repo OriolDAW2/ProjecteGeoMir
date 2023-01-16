@@ -11,6 +11,13 @@ use App\Models\User;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->only('store');
+        $this->middleware('auth:sanctum')->only('update');
+        $this->middleware('auth:sanctum')->only('destroy');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -224,43 +231,53 @@ class PostController extends Controller
         }  
     }
 
-    public function like(Request $request, $id)
+    public function like($id)
     {
-        $post = Post::find($id);
-        if($post)
-        {
-            $likes = Like::create([
+        $post=Post::find($id);
+        if (Like::where([
+                ['user_id', "=" , auth()->user()->id],
+                ['post_id', "=" ,$id],
+            ])->exists()) {
+            return response()->json([
+                'success'  => false,
+                'message' => 'The post is already like'
+            ], 500);
+        }else{
+            $like = Like::create([
                 'user_id' => auth()->user()->id,
-                'post_id' => $post->id
+                'post_id' => $post->id,
             ]);
             return response()->json([
                 'success' => true,
-                'data'    => $post
+                'data'    => $like
             ], 200);
-        }else {
-            return response()->json([
-                'success'  => false,
-                'message' => 'Error Like'
-            ], 500);
-        }
-        
+        }        
     }
 
-    public function unlike(Request $request, $id)
+    public function unlike($id)
     {
-        $post = Post::find($id);
+        $post=Post::find($id);
+        if (Like::where([['user_id', "=" ,auth()->user()->id],['post_id', "=" ,$post->id],])->exists()) {
+            
+            $like = Like::where([
+                ['user_id', "=" ,auth()->user()->id],
+                ['post_id', "=" ,$id],
+            ]);
+            $like->first();
+    
+            $like->delete();
 
-        if($post){
-            Like::where('user_id', auth()->user()->id)->where('post_id', $post->id)->delete();
             return response()->json([
                 'success' => true,
                 'data'    => $post
             ], 200);
-        }else {
+        }else{
             return response()->json([
                 'success'  => false,
-                'message' => 'Error unLike'
+                'message' => 'The post is not like'
             ], 500);
-        }
+            
+        }  
+        
     }
 }

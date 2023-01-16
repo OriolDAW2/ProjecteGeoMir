@@ -96,6 +96,11 @@ class PlaceTest extends TestCase
     
     public function test_place_create_error()
     {
+        $user = self::$testUser;
+        Sanctum::actingAs(
+            $user,
+            ['*'] // grant all abilities to the token
+        );
         // Create fake place with invalid characters
         $name  = "avatar.png";
         $size = 5000; /*KB*/
@@ -144,6 +149,11 @@ class PlaceTest extends TestCase
         */
     public function test_place_update(object $place)
     {
+        $user = self::$testUser;
+        Sanctum::actingAs(
+            $user,
+            ['*'] // grant all abilities to the token
+        );
         // Create fake file
         $name  = "avatar.png";
         $size = 500; /*KB*/
@@ -196,6 +206,11 @@ class PlaceTest extends TestCase
         */
     public function test_place_update_error(object $place)
     {
+        $user = self::$testUser;
+        Sanctum::actingAs(
+            $user,
+            ['*'] // grant all abilities to the token
+        );
         // Create fake file with invalid max size
         $name  = "photo.jpg";
         $size = 3000; /*KB*/
@@ -228,6 +243,11 @@ class PlaceTest extends TestCase
     
     public function test_place_update_notfound()
     {
+        $user = self::$testUser;
+        Sanctum::actingAs(
+            $user,
+            ['*'] // grant all abilities to the token
+        );
         $id = "not_exists";
         $response = $this->putJson("/api/places/{$id}", []);
         $this->_test_notfound($response);
@@ -238,6 +258,11 @@ class PlaceTest extends TestCase
         */
     public function test_place_delete(object $place)
     {
+        $user = self::$testUser;
+        Sanctum::actingAs(
+            $user,
+            ['*'] // grant all abilities to the token
+        );
         // Delete one file using API web service
         $response = $this->deleteJson("/api/places/{$place->id}");
         // Check OK response
@@ -246,10 +271,63 @@ class PlaceTest extends TestCase
     
     public function test_place_delete_notfound()
     {
+        $user = self::$testUser;
+        Sanctum::actingAs(
+            $user,
+            ['*'] // grant all abilities to the token
+        );
         $id = "not_exists";
         $response = $this->deleteJson("/api/places/{$id}");
         $this->_test_notfound($response);
 
+    }
+
+        /**
+     * @depends test_place_create
+     */
+    public function test_place_favorite(object $place)
+    {
+        Sanctum::actingAs(self::$testUser);
+        $response = $this->postJson("/api/places/{$place->id}/favorite");
+        // Check OK response
+        $this->_test_ok($response);
+        
+    }
+
+    /**
+     * @depends test_place_create
+     */
+    public function test_place_favorite_error(object $place)
+    {
+        Sanctum::actingAs(self::$testUser);
+        $response = $this->postJson("/api/places/{$place->id}/favorite");
+        // Check ERROR response
+        $response->assertStatus(500);
+        
+    }
+   /**
+     * @depends test_place_create
+     */
+    public function test_place_unfavorite(object $place)
+    {
+        Sanctum::actingAs(self::$testUser);
+        // Read one file
+        $response = $this->deleteJson("/api/places/{$place->id}/favorite");
+        // Check OK response
+        $this->_test_ok($response);
+        
+    }
+
+    /**
+     * @depends test_place_create
+     */
+    public function test_place_unfavorite_error(object $place)
+    {
+        Sanctum::actingAs(self::$testUser);
+        $response = $this->deleteJson("/api/places/{$place->id}/favorite");
+        // Check ERROR response
+        $response->assertStatus(500);
+        
     }
     
     protected function _test_ok($response, $status = 200)

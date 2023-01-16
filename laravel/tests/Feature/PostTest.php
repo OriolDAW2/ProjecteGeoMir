@@ -94,6 +94,11 @@ class PostTest extends TestCase
     
     public function test_post_create_error()
     {
+        $user = self::$testUser;
+        Sanctum::actingAs(
+            $user,
+            ['*'] // grant all abilities to the token
+        );
         // Create fake post with invalid characters
         $name  = "avatar.png";
         $size = 5000; /*KB*/
@@ -140,6 +145,11 @@ class PostTest extends TestCase
         */
     public function test_post_update(object $post)
     {
+        $user = self::$testUser;
+        Sanctum::actingAs(
+            $user,
+            ['*'] // grant all abilities to the token
+        );
         // Create fake file
         $name  = "avatar.png";
         $size = 500; /*KB*/
@@ -189,6 +199,11 @@ class PostTest extends TestCase
         */
     public function test_post_update_error(object $post)
     {
+        $user = self::$testUser;
+        Sanctum::actingAs(
+            $user,
+            ['*'] // grant all abilities to the token
+        );
         // Create fake file with invalid max size
         $name  = "photo.jpg";
         $size = 3000; /*KB*/
@@ -219,6 +234,11 @@ class PostTest extends TestCase
     
     public function test_post_update_notfound()
     {
+        $user = self::$testUser;
+        Sanctum::actingAs(
+            $user,
+            ['*'] // grant all abilities to the token
+        );
         $id = "not_exists";
         $response = $this->putJson("/api/posts/{$id}", []);
         $this->_test_notfound($response);
@@ -229,6 +249,11 @@ class PostTest extends TestCase
         */
     public function test_post_delete(object $post)
     {
+        $user = self::$testUser;
+        Sanctum::actingAs(
+            $user,
+            ['*'] // grant all abilities to the token
+        );
         // Delete one file using API web service
         $response = $this->deleteJson("/api/posts/{$post->id}");
         // Check OK response
@@ -237,6 +262,11 @@ class PostTest extends TestCase
     
     public function test_post_delete_notfound()
     {
+        $user = self::$testUser;
+        Sanctum::actingAs(
+            $user,
+            ['*'] // grant all abilities to the token
+        );
         $id = "not_exists";
         $response = $this->deleteJson("/api/posts/{$id}");
         $this->_test_notfound($response);
@@ -247,6 +277,11 @@ class PostTest extends TestCase
         */
     public function test_post_like(object $post)
     {
+        $user = self::$testUser;
+        Sanctum::actingAs(
+            $user,
+            ['*'] // grant all abilities to the token
+        );
         // Delete one file using API web service
         $response = $this->postJson("/api/posts/{$post->id}/likes");
         // Check OK response
@@ -257,6 +292,11 @@ class PostTest extends TestCase
         */
     public function test_post_like_error(object $post)
     {
+        $user = self::$testUser;
+        Sanctum::actingAs(
+            $user,
+            ['*'] // grant all abilities to the token
+        );
         $response = $this->postJson("/api/posts/{$post->id}", []);
         $this->_test_error($response);
     }
@@ -265,6 +305,11 @@ class PostTest extends TestCase
         */
     public function test_post_unlike(object $post)
     {
+        $user = self::$testUser;
+        Sanctum::actingAs(
+            $user,
+            ['*'] // grant all abilities to the token
+        );
         // Delete one file using API web service
         $response = $this->postJson("/api/posts/{$post->id}/unlikes");
         // Check OK response
@@ -275,6 +320,11 @@ class PostTest extends TestCase
         */
     public function test_post_unlike_error(object $post)
     {
+        $user = self::$testUser;
+        Sanctum::actingAs(
+            $user,
+            ['*'] // grant all abilities to the token
+        );
         $response = $this->postJson("/api/posts/{$post->id}", []);
         $this->_test_error($response);
     }

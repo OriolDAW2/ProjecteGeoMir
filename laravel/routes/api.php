@@ -33,8 +33,12 @@ Route::apiResource('files', FileController::class);
 Route::post('files/{file}', [FileController::class, 'update_workaround']);
 
 Route::apiResource('posts', PostController::class);
+Route::post('/posts/{post}', [PostController::class, 'store'])
+->middleware('auth:sanctum');
 
 Route::apiResource('places', PlaceController::class);
+Route::post('/places/{place}', [PostController::class, 'store'])
+->middleware('auth:sanctum');
 
 Route::post('/posts/{post}/like', [PostController::class, 'like']);
-Route::post('/posts/{post}/unlike', [PostController::class, 'unlike']);
+Route::delete('/posts/{post}/unlike', [PostController::class, 'unlike']);
